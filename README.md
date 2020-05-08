@@ -20,20 +20,20 @@
 
   - Build
 
-  ' docker build -t test . '
+  ``` docker build -t test . ```
 
   - Run
 
-  ' docker run -td --name my-nginx -p 80:80 -p 443:443 test '
+  ``` docker run -td --name my-nginx -p 80:80 -p 443:443 test ```
 
   If the 80/tcp port is occupied run:
 
-  ' sudo fuser -k -n tcp 80 '
+  ``` sudo fuser -k -n tcp 80 ```
 
   And retry.
 
   - Enter the container in bash
 
-  ' docker exec -it my-nginx bash '
+  ``` docker exec -it my-nginx bash ```
 
   
