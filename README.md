@@ -22,6 +22,13 @@
 
   ``` docker build -t test . ```
 
+  If you have a permission error run:
+	```
+	sudo usermod -aG docker user42 
+    newgrp docker
+	```
+  and retry to docker build.
+
   - Run
 
   ``` docker run -td --name my-nginx -p 80:80 -p 443:443 test ```
@@ -30,7 +37,7 @@
 
   ``` sudo fuser -k -n tcp 80 ```
 
-  And retry.
+  and retry to docker run.
 
   - Enter the container in bash
 
