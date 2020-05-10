@@ -1,25 +1,21 @@
 FROM debian:buster
 
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections \
-	&& apt-get install -y -q
+	&& apt-get install -qy
 
 # Install php, Nginx, MySQL
 RUN apt-get update -qy \
     && apt-get upgrade -qy \
-    && apt-get install -qy 	wget php7.3-fpm \
+    && apt-get install -qy 	wget \
+							vim \ 
+							php7.3-fpm \
 							php7.3-mysql \
 							nginx \
 							default-mysql-server \
 							php-mbstring
 
 COPY ./srcs/* srcs_docker/
-
-# Start all services
-# RUN service nginx start \
-# 	&& service nginx status \
-# 	&& service mysql start \
-# 	&& service php7.3-fpm start \
-# 	&& service php7.3-fpm status
+RUN mv /srcs_docker/autoindex_switch.sh /
 
 # Install Wordpress
 RUN wget https://wordpress.org/latest.tar.gz -O - | tar -xz -C /var/www/ \
@@ -30,20 +26,9 @@ RUN wget https://files.phpmyadmin.net/phpMyAdmin/4.9.5/phpMyAdmin-4.9.5-english.
 	&& mv /var/www/phpMyAdmin-4.9.5-english /var/www/phpmyadmin \
 	&& chown -R www-data:www-data /var/www/phpmyadmin
 
+# Remove html
+RUN rm -rf /var/www/html
+
 EXPOSE 80 443
-
-# # Add the server block to the nginx directory
-# RUN cp /srcs_docker/nginx-block /etc/nginx/sites-available/nginx-block
-# # Create the link to enable the block
-# RUN ln -s /etc/nginx/sites-available/nginx-block  /etc/nginx/sites-enabled/nginx-block
-# # Remove the default block
-# RUN rm /etc/nginx/sites-enabled/default
-
-# # Create the MySQL detabase
-# RUN mysql < /srcs_docker/data_base.sql 
-# # Create the SSL Certificate
-# RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt < /srcs_docker/certificate
-
-# RUN service nginx restart
 
 ENTRYPOINT ["srcs_docker/start.sh"]
