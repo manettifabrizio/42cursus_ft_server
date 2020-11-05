@@ -19,9 +19,9 @@
 
   - Run
 
-  ``` docker run -td --name my-nginx -p 80:80 -p 443:443 my_nginx_img ```
+  ``` docker run -td --name my_nginx -p 80:80 -p 443:443 my_nginx_img ```
 
-  If the 80/tcp port is occupied run ``` sudo fuser -k -n tcp 80 ``` and ``` docker rm my-nginx ``` after retry to run.
+  If the 80/tcp port is occupied run ``` sudo fuser -k -n tcp 80 ``` and ``` docker rm my_nginx ``` after retry to run.
 
   - Turn OFF/ON the autoindex
 
@@ -29,10 +29,10 @@
   
   - Enter the container in bash
 
-  ``` docker exec -it my-nginx bash ```
+  ``` docker exec -it my_nginx bash ```
 
   - Stop the container
 
-  ``` docker stop my-nginx ```
+  ``` docker stop my_nginx ```
 
   
